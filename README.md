@@ -18,7 +18,7 @@ Some features it offers:
 
 
 
-## Basic example
+## Skeleton sketch
 
 ``` py 
 import SourceRoboticsToolbox
