@@ -1,0 +1,8 @@
+README.md
+setup.py
+SourceRoboticsToolbox/SourceRoboticsToolbox.py
+SourceRoboticsToolbox/__init__.py
+SourceRoboticsToolbox.egg-info/PKG-INFO
+SourceRoboticsToolbox.egg-info/SOURCES.txt
+SourceRoboticsToolbox.egg-info/dependency_links.txt
+SourceRoboticsToolbox.egg-info/top_level.txt
