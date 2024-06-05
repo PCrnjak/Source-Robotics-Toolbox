@@ -16,10 +16,15 @@ Some features it offers:
 
 ## What is sector homing?
 
-<img src="Images/sector_image.png" alt="drawing" width="5000"/>
+<img src="Images/sector_image.png" alt="drawing" width="3000"/>
 
 
-Lets iamgine we have a motor attached to our spectral micro BLDC driver. It uses 14bit apsolute encoder allowing it to have 16384 different numbers representing its one full rotation. Normally when the encoder would make more than one turn it would overflow and start counting from the beggining. Spectral micro carefully tracks those overflows and that way can count indefinetly in both directions. Lets iamgine we did 30 turn and we are at position 490000. Once we Power of  the motor and turn it on again it will be at position in range from 0 -14bit-1. 
+The image represents a 6:1 gear reduction with a Spectral micro BLDC driver. Each sector represents one full rotation of the BLDC motor. For the motor encoder, each sector begins at 0 encoder ticks and ends at 16,383 encoder ticks. Sector homing allows you to record the initial position of the encoder and map it to a specific value for your joint. With this setup, if your robot joint boots in the correct sector, it will know its true position.<br />
+
+Note: This is a simplified explanation. The algorithm is a bit more complex and includes some smart features. To learn more, check the source code.<br />
+
+As the gear reduction ratio increases, this method becomes less effective. However, it works well for ratios up to 15:1.
+
 
 
 ## Skeleton sketch
@@ -29,7 +34,7 @@ import SourceRoboticsToolbox
 import time
 
 # This is represents encoder ticks where your joint should be at 0 rad
-# Usually you know that position from your robots DH table / kinematic diagram
+# Usually you know that joint position from your robots DH table / kinematic diagram
 Master_position = 14000 
 Joint_reduction_ratio = 6 # Joint has reduction ratio of 6:1
 
