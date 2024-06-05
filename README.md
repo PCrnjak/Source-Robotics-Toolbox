@@ -5,7 +5,7 @@
 # How to use?
 
 This lib was created to simplify the control of your robot with Source robotic line of motor drivers.<br />
-It works perfectly with [Spectral-BLDC lib](https://github.com/PCrnjak/Spectral-BLDC-Python).<br />
+Pairing it the with [Spectral-BLDC lib](https://github.com/PCrnjak/Spectral-BLDC-Python) allows you to write extremely simple yet capable code for robotic control. <br />
 Some features it offers:
 
 * Sector homing
@@ -16,6 +16,7 @@ Some features it offers:
 
 ## What is sector homing?
 
+Lets iamgine we have a motor attached to our spectral micro BLDC driver. It uses 14bit apsolute encoder allowing it to have 16384 different numbers representing its one full rotation. Normally when the encoder would make more than one turn it would overflow and start counting from the beggining. Spectral micro carefully tracks those overflows and that way can count indefinetly in both directions. Lets iamgine we did 30 turn and we are at position 490000. Once we Power of  the motor and turn it on again it will be at position in range from 0 -14bit-1. 
 
 
 ## Skeleton sketch
