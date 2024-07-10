@@ -2,7 +2,11 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT) ![Issues](https://img.shields.io/github/issues/PCrnjak/Source-Robotics-Toolbox) ![release](https://img.shields.io/github/v/release/PCrnjak/Source-Robotics-Toolbox)
 
-# How to use?
+## How to install?
+
+    pip install SourceRoboticsToolbox
+
+## How to use?
 
 This lib was created to simplify the control of your robot with Source robotic line of motor drivers.<br />
 Pairing it the with [Spectral-BLDC lib](https://github.com/PCrnjak/Spectral-BLDC-Python) allows you to write extremely simple yet capable code for robotic control. <br />
