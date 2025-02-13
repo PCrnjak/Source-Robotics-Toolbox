@@ -101,8 +101,11 @@ class Joint:
     def get_joint_speed(self, motor_speed):
         # Adjust the motor speed based on direction
         motor_speed *= -1 if self.dir == 1 else 1
-        # Calculate the joint speed in radians per second
-        joint_speed = motor_speed * (2 * math.pi / self.encoder_max_counts) * self.gear_ratio
+        # Calculate the joint speed in radians per second        
+        revolutions_per_second = motor_speed / self.encoder_max_counts
+        radians_per_second = revolutions_per_second * 2 * math.pi
+        joint_speed = radians_per_second /  self.gear_ratio
+        
         return joint_speed
     
     # Returns raw encoder speed in tick/s
@@ -110,7 +113,9 @@ class Joint:
         # Adjust the joint speed based on direction
         joint_speed *= -1 if self.dir == 1 else 1
         # Calculate the encoder speed in ticks per second
-        encoder_speed = joint_speed / (2 * math.pi / self.encoder_max_counts) / self.gear_ratio
+        revolutions_per_second = (joint_speed * self.gear_ratio) / (2 * math.pi)
+        encoder_speed = revolutions_per_second * self.encoder_max_counts
+
         return encoder_speed
 
     # Returns raw encoder ticks 
