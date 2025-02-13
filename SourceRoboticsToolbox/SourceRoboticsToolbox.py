@@ -142,7 +142,46 @@ class Joint:
             motor_position = joint_position + self.master_position - self.offset_ticks
         return motor_position      
             
+class DiffJoint:
+    def __init__(self, joint_1 = 14, joint_2=9569, gear_ratio = 1, dir = 0):
+        self.gear_ratio = gear_ratio # Gear ratio of the joint
+        self.dir = dir #
+        self.initial_pos = 0
+        self.sector = "middle"
+        self.sector_initial = "middle"
+        # Calculate offset_ticks based on direction
+        if self.dir == 0:
+            self.offset_ticks = self.radians_to_ticks(self.offset)
+        else:
+            # If direction is reversed, adjust the offset accordingly
+            self.offset_ticks = self.radians_to_ticks(2 * math.pi - self.offset)
         
+    # Returns Joint position in radians (This is the position AFTER the reduction!)
+    def get_joint_position(self, motor_position):
+        None
+    
+    def get_joint_speed(self, motor_speed):
+        None
+
+    def get_joint_torque(self, motor_torque):
+        None
+    
+    def get_encoder_position(self,joint_position):
+        None
+    
+    def get_encoder_speed(self,joint_speed):
+        None
+    
+    def get_encoder_torque(self,joint_torque):
+        None
+
+    
+
+
+
+
+
+
 # Example usage:
 if __name__ == "__main__":
     joint = Joint(encoder_resolution = 14, master_position=9569, gear_ratio = 1, offset = 0, dir = 0)
