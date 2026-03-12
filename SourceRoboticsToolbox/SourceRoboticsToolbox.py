@@ -45,7 +45,7 @@ class Joint:
     # Returns encoder value in terms of single revolution
     def unwrap_position(self, position_ticks):
         # Apply modular arithmetic to ensure position falls within valid range
-        unwrapped_encoder_raw = position_ticks % self.encoder_resolution
+        unwrapped_encoder_raw = position_ticks % self.encoder_max_counts
         return unwrapped_encoder_raw
 
     def determine_sector(self, initial):
@@ -82,6 +82,9 @@ class Joint:
             if self.sector_initial == "right_2":
                 joint_position = motor_position - self.master_position - self.encoder_max_counts + self.offset_ticks
 
+        elif self.sector == "not_sector_homing":
+            joint_position = motor_position
+
         elif self.sector == "left":
             if self.sector_initial == "left_1":
                 joint_position = motor_position - self.master_position + self.encoder_max_counts + self.offset_ticks
@@ -101,21 +104,16 @@ class Joint:
     def get_joint_speed(self, motor_speed):
         # Adjust the motor speed based on direction
         motor_speed *= -1 if self.dir == 1 else 1
-        # Calculate the joint speed in radians per second        
-        revolutions_per_second = motor_speed / self.encoder_max_counts
-        radians_per_second = revolutions_per_second * 2 * math.pi
-        joint_speed = radians_per_second /  self.gear_ratio
-        
+        # Calculate the joint speed in radians per second
+        joint_speed = motor_speed * (2 * math.pi / self.encoder_max_counts) / self.gear_ratio
         return joint_speed
     
-    # Returns raw encoder speed in tick/s
+    # Returns raw encoder speed in tick/s TODO check
     def get_encoder_speed(self, joint_speed):
         # Adjust the joint speed based on direction
         joint_speed *= -1 if self.dir == 1 else 1
         # Calculate the encoder speed in ticks per second
-        revolutions_per_second = (joint_speed * self.gear_ratio) / (2 * math.pi)
-        encoder_speed = revolutions_per_second * self.encoder_max_counts
-
+        encoder_speed = (joint_speed * self.gear_ratio) / (2 * math.pi / self.encoder_max_counts) 
         return encoder_speed
 
     # Returns raw encoder ticks 
@@ -142,46 +140,7 @@ class Joint:
             motor_position = joint_position + self.master_position - self.offset_ticks
         return motor_position      
             
-class DiffJoint:
-    def __init__(self, joint_1 = 14, joint_2=9569, gear_ratio = 1, dir = 0):
-        self.gear_ratio = gear_ratio # Gear ratio of the joint
-        self.dir = dir #
-        self.initial_pos = 0
-        self.sector = "middle"
-        self.sector_initial = "middle"
-        # Calculate offset_ticks based on direction
-        if self.dir == 0:
-            self.offset_ticks = self.radians_to_ticks(self.offset)
-        else:
-            # If direction is reversed, adjust the offset accordingly
-            self.offset_ticks = self.radians_to_ticks(2 * math.pi - self.offset)
         
-    # Returns Joint position in radians (This is the position AFTER the reduction!)
-    def get_joint_position(self, motor_position):
-        None
-    
-    def get_joint_speed(self, motor_speed):
-        None
-
-    def get_joint_torque(self, motor_torque):
-        None
-    
-    def get_encoder_position(self,joint_position):
-        None
-    
-    def get_encoder_speed(self,joint_speed):
-        None
-    
-    def get_encoder_torque(self,joint_torque):
-        None
-
-    
-
-
-
-
-
-
 # Example usage:
 if __name__ == "__main__":
     joint = Joint(encoder_resolution = 14, master_position=9569, gear_ratio = 1, offset = 0, dir = 0)
