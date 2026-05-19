@@ -1,4 +1,6 @@
+LICENSE
 README.md
+pyproject.toml
 setup.py
 SourceRoboticsToolbox/SourceRoboticsToolbox.py
 SourceRoboticsToolbox/__init__.py
